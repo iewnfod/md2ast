@@ -81,7 +81,7 @@ std::string ASTNode::toHTML() const {
 			html << "<code>" << this->children2HTML() << "</code>";
 			break;
 		case CODEBLOCK:
-			html << "<pre><code>" << this->children2HTML() << "</code></pre>";
+			html << "<pre><code lang=\"" << this->lang << "\">" << this->children2HTML() << "</code></pre>";
 			break;
 		case UNKNOWN_NODE:
 		default:
