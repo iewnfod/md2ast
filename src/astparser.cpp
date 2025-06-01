@@ -3,7 +3,7 @@
 #include "md4c.h"
 #include <cstddef>
 
-ASTNode* currentParent = NULL;
+ASTNode* currentParent = nullptr;
 
 void setCurrentParent(ASTNode *parent) {
 	currentParent = parent;
@@ -14,8 +14,8 @@ int ASTParser::enter_block_callback(MD_BLOCKTYPE blockType, void* detail, void* 
 
 	switch (blockType) {
 		case MD_BLOCK_H: {
-			MD_BLOCK_H_DETAIL* hDetail = (MD_BLOCK_H_DETAIL*) detail;
-			switch (hDetail->level) {
+			const auto* d = static_cast<MD_BLOCK_H_DETAIL *>(detail);
+			switch (d->level) {
 				case 1: node->setNodeType(H1_TITLE); break;
 				case 2: node->setNodeType(H2_TITLE); break;
 				case 3: node->setNodeType(H3_TITLE); break;
@@ -31,8 +31,9 @@ int ASTParser::enter_block_callback(MD_BLOCKTYPE blockType, void* detail, void* 
 			break;
 		case MD_BLOCK_CODE: {
 			node->setNodeType(CODEBLOCK);
-			MD_BLOCK_CODE_DETAIL* cDetail = (MD_BLOCK_CODE_DETAIL*) detail;
-			node->setLang(cDetail->lang.text);
+			const auto* d = static_cast<MD_BLOCK_CODE_DETAIL *>(detail);
+			const auto lang = d->lang.text;
+			node->setLang(std::string(lang, d->lang.size));
 			break;
 		}
 		default: break;
@@ -69,6 +70,7 @@ int ASTParser::enter_span_callback(MD_SPANTYPE spanType, void* detail, void* use
 }
 
 int ASTParser::leave_span_callback(MD_SPANTYPE spanType, void* detail, void* userdata) {
+	setCurrentParent(currentParent->getParent());
 	return 0;
 }
 
@@ -86,18 +88,16 @@ int ASTParser::text_callback(MD_TEXTTYPE textType, const MD_CHAR* text, MD_SIZE 
 
 
 MD_PARSER MdParser() {
-	auto *p = new ASTParser();
-
 	MD_PARSER parser = {
 		.abi_version = 0,
 		.flags = MD_FLAG_COLLAPSEWHITESPACE | MD_FLAG_PERMISSIVEURLAUTOLINKS | MD_FLAG_TABLES | MD_FLAG_TASKLISTS,
-		.enter_block = p->enter_block_callback,
-		.leave_block = p->leave_block_callback,
-		.enter_span = p->enter_span_callback,
-		.leave_span = p->leave_span_callback,
-		.text = p->text_callback,
-		.debug_log = NULL,
-		.syntax = NULL
+		.enter_block = ASTParser::enter_block_callback,
+		.leave_block = ASTParser::leave_block_callback,
+		.enter_span = ASTParser::enter_span_callback,
+		.leave_span = ASTParser::leave_span_callback,
+		.text = ASTParser::text_callback,
+		.debug_log = nullptr,
+		.syntax = nullptr
 	};
 	return parser;
 }

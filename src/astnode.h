@@ -44,7 +44,7 @@ public:
 	void setLang(const std::string &lang);
 	[[nodiscard]] ASTNode* getParent() const;
 
-	std::string toHTML() const;
+	[[nodiscard]] std::string toHTML() const;
 
 private:
 	ASTNodeType nodeType;
