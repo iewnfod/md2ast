@@ -13,7 +13,11 @@ ASTNode *MarkdownParser::toAST(const char *markdown) {
 
 	MD_PARSER parser = MdParser();
 
-	int res = md_parse(markdown, std::strlen(markdown), &parser, NULL);
+	int res = md_parse(markdown, std::strlen(markdown), &parser, nullptr);
 
 	return root;
+}
+
+ASTNode *MarkdownParser::toAST(const std::string &markdown) {
+	return toAST(markdown.c_str());
 }
