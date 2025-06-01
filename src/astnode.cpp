@@ -1,6 +1,5 @@
 #include "astnode.h"
 
-#include <iostream>
 #include <sstream>
 #include <bits/ostream.tcc>
 

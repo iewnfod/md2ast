@@ -1,7 +1,6 @@
 #include "astparser.h"
 #include "astnode.h"
 #include "md4c.h"
-#include <cstddef>
 
 ASTNode* currentParent = nullptr;
 

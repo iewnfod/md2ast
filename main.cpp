@@ -16,7 +16,7 @@ int main() {
         markdown += c;
     }
 
-    auto root = MarkdownParser::toAST(markdown);
+    const auto root = MarkdownParser::toAST(markdown);
     std::cout << root->toHTML() << std::endl;
     return 0;
 }

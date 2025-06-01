@@ -1,6 +1,6 @@
 #ifndef ASTNODE_H
 #define ASTNODE_H
-#include <sstream>
+
 #include <string>
 #include <vector>
 
