@@ -14,11 +14,11 @@ include_directories(lib/md4c/src)
 
 file(
     GLOB SOURCES
-    "*.cpp" "src/*.cpp"
+    "*.cpp" "src/*.cpp" "lib/md4c/src/*.c"
 )
 file(
     GLOB HEADERS
-    "*.h" "src/*.h"
+    "*.h" "src/*.h" "lib/md4c/src/*.h"
 )
 
 add_library(md2ast SHARED ${SOURCES} ${HEADERS})
