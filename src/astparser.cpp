@@ -35,6 +35,10 @@ int ASTParser::enter_block_callback(MD_BLOCKTYPE blockType, void* detail, void* 
 			node->setLang(std::string(lang, d->lang.size));
 			break;
 		}
+		case MD_BLOCK_DOC: {
+			node->setNodeType(DOCUMENT);
+			break;
+		}
 		default: break;
 	}
 
@@ -57,8 +61,7 @@ int ASTParser::enter_span_callback(MD_SPANTYPE spanType, void* detail, void* use
 		case MD_SPAN_CODE:
 			node->setNodeType(INLINECODE);
 			break;
-		default:
-			break;
+		default: break;
 	}
 
 	if (currentParent) {

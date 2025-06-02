@@ -7,7 +7,6 @@
 
 ASTNode *MarkdownParser::toAST(const char *markdown) {
 	auto *root = new ASTNode();
-	root->setNodeType(DOCUMENT);
 	setCurrentParent(root);
 
 	MD_PARSER parser = MdParser();

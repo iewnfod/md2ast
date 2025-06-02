@@ -25,7 +25,8 @@ enum ASTNodeType {
 	IMAGE,
 	BR,
 	LINK,
-	LATEX,
+	LATEXBLOCK,
+	INLINELATEX,
 	TEXT,
 	UNKNOWN_NODE
 };
@@ -51,7 +52,7 @@ private:
 	std::string content{};
 	std::string lang{};
 	int level{};
-	struct ASTNode* parent{};
+	ASTNode* parent{};
 
 	[[nodiscard]] std::string children2HTML() const;
 
