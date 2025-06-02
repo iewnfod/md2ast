@@ -44,6 +44,10 @@ public:
 	void setLang(const char* lang);
 	void setLang(const std::string &lang);
 	[[nodiscard]] ASTNode* getParent() const;
+	[[nodiscard]] std::string getContent() const;
+	[[nodiscard]] std::string getLang() const;
+	[[nodiscard]] int getLevel() const;
+	[[nodiscard]] std::vector<ASTNode*> getChildren() const;
 
 	[[nodiscard]] std::string toHTML() const;
 

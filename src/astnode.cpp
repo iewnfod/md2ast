@@ -39,6 +39,23 @@ ASTNode* ASTNode::getParent() const {
 	return this->parent;
 }
 
+std::string ASTNode::getContent() const {
+	return this->content;
+}
+
+int ASTNode::getLevel() const {
+	return this->level;
+}
+
+std::string ASTNode::getLang() const {
+	return this->lang;
+}
+
+std::vector<ASTNode*> ASTNode::getChildren() const {
+	return this->children;
+}
+
+
 ASTNode::ASTNode() {
 	this->nodeType = UNKNOWN_NODE;
 }
