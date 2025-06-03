@@ -31,8 +31,7 @@ int ASTParser::enter_block_callback(MD_BLOCKTYPE blockType, void* detail, void* 
 		case MD_BLOCK_CODE: {
 			node->setNodeType(CODEBLOCK);
 			const auto* d = static_cast<MD_BLOCK_CODE_DETAIL *>(detail);
-			const auto lang = d->lang.text;
-			node->setLang(std::string(lang, d->lang.size));
+			node->setLang(std::string(d->lang.text, d->lang.size));
 			break;
 		}
 		case MD_BLOCK_DOC: {
@@ -61,6 +60,12 @@ int ASTParser::enter_span_callback(MD_SPANTYPE spanType, void* detail, void* use
 		case MD_SPAN_CODE:
 			node->setNodeType(INLINECODE);
 			break;
+		case MD_SPAN_A: {
+			node->setNodeType(LINK);
+			const auto* d = static_cast<MD_SPAN_A_DETAIL *>(detail);
+			node->setHref(std::string(d->href.text, d->href.size));
+			break;
+		}
 		default: break;
 	}
 
@@ -79,7 +84,7 @@ int ASTParser::leave_span_callback(MD_SPANTYPE spanType, void* detail, void* use
 int ASTParser::text_callback(MD_TEXTTYPE textType, const MD_CHAR* text, MD_SIZE size, void* userdata) {
 	auto *node = new ASTNode();
 	node->setNodeType(TEXT);
-	std::string d = std::string(text, size);
+	const auto d = std::string(text, size);
 	node->setContent(d);
 
 	if (currentParent) {

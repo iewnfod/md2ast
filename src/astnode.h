@@ -43,11 +43,14 @@ public:
 	void setLevel(int level);
 	void setLang(const char* lang);
 	void setLang(const std::string &lang);
+	void setHref(const char* href);
+	void setHref(const std::string &href);
 	[[nodiscard]] ASTNode* getParent() const;
 	[[nodiscard]] std::string getContent() const;
 	[[nodiscard]] std::string getLang() const;
 	[[nodiscard]] int getLevel() const;
 	[[nodiscard]] std::vector<ASTNode*> getChildren() const;
+	[[nodiscard]] std::string getHref() const;
 
 	[[nodiscard]] std::string toHTML() const;
 
@@ -56,6 +59,8 @@ private:
 	std::string content{};
 	std::string lang{};
 	int level{};
+	std::string href{};
+
 	ASTNode* parent{};
 
 	[[nodiscard]] std::string children2HTML() const;

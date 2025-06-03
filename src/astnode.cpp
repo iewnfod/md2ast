@@ -55,6 +55,18 @@ std::vector<ASTNode*> ASTNode::getChildren() const {
 	return this->children;
 }
 
+std::string ASTNode::getHref() const {
+	return this->href;
+}
+
+void ASTNode::setHref(const char* href) {
+    this->href = href;
+}
+
+void ASTNode::setHref(const std::string& href) {
+    this->href = href;
+}
+
 
 ASTNode::ASTNode() {
 	this->nodeType = UNKNOWN_NODE;
@@ -98,6 +110,9 @@ std::string ASTNode::toHTML() const {
 			break;
 		case CODEBLOCK:
 			html << "<pre><code lang=\"" << this->lang << "\">" << this->children2HTML() << "</code></pre>";
+			break;
+		case LINK:
+			html << "<a href=\"" << this->getHref() << "\">" << this->children2HTML() << "</a>";
 			break;
 		case UNKNOWN_NODE:
 		default:
